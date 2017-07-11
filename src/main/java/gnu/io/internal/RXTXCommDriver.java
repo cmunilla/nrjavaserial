@@ -95,44 +95,19 @@ public class RXTXCommDriver implements CommDriver
     protected native static void unobserve();    
 	
 	static
-	{		
-		/*
-		   Perform a crude check to make sure people don't mix
-		   versions of the Jar and native lib
-
-		   Mixing the libs can create a nightmare.
-
-		   It could be possible to move this over to RXTXVersion
-		   but All we want to do is warn people when first loading
-		   the Library.
-		*/
-		//String JarVersion = RXTXVersion.getVersion();
-		//String LibVersion;
+	{	
 		try 
 		{
-		    //LibVersion = RXTXVersion.nativeGetVersion();
 		    System.loadLibrary( "NRJavaSerial" );
 		
 		} catch ( Exception e )
 		{
 			e.printStackTrace();
-			//LibVersion = nativeGetVersion();
 			
 		} catch ( Error e )
 		{
 			e.printStackTrace();
-			//LibVersion = nativeGetVersion();
 		}
-		//if ( devel )
-		//{
-			//if ( ! noVersionOutput )
-			//{
-				//System.out.println("Stable Library");
-				//System.out.println("=========================================");
-				//System.out.println("Native lib Version = " + LibVersion );
-				//System.out.println("Java lib Version   = " + JarVersion );
-			//}
-		//}
 	}
 
 	/**
@@ -217,12 +192,12 @@ public class RXTXCommDriver implements CommDriver
 		
 		if(context != null)
 		{
-			String udevProp = context.getProperty("fr.cea.sensinact.udev.enabled");
+			String udevProp = context.getProperty("udev.enabled");
 			
 			boolean udev = udevProp==null?false:Boolean.parseBoolean(udevProp);
 			if(udev)
 			{ 
-			    String udevList = context.getProperty("fr.cea.sensinact.udev.list");
+			    String udevList = context.getProperty("udev.list");
 				System.setProperty("gnu.io.SerialPorts", udevList);
 			}
 		}
